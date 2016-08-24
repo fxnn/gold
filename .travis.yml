@@ -14,6 +14,11 @@ matrix:
     - go: tip
       # HINT: this is only for interest -- decision to support new versions is made manually
 
+install:
+  # set up coveralls.io integration
+  - go get github.com/pierrre/gotestcover
+  - go get github.com/mattn/goveralls
+
 script:
   - go generate -x ./...
   # run tests with coverage for all subpackages
