@@ -16,13 +16,12 @@ matrix:
 
 install:
   # set up coveralls.io integration
-  - go get github.com/pierrre/gotestcover
-  - go get github.com/mattn/goveralls
+  #- go get github.com/pierrre/gotestcover
+  #- go get github.com/mattn/goveralls
 
 script:
-  - go generate -x ./...
   # run tests with coverage for all subpackages
-  - gotestcover -v -covermode=count -coverprofile=coverage.out ./...
+  #- gotestcover -v -covermode=count -coverprofile=coverage.out ./...
   # submit to coveralls.io
-  - $HOME/gopath/bin/goveralls -coverprofile=coverage.out -service=travis-ci -repotoken $COVERALLS_TOKEN
+  #- $HOME/gopath/bin/goveralls -coverprofile=coverage.out -service=travis-ci -repotoken $COVERALLS_TOKEN
   
