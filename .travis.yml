@@ -1,0 +1,23 @@
+language: go
+
+go:
+  - tip
+  - 1.7
+  - 1.6
+
+matrix:
+  include:
+    - go: 1.5.2
+      env: GO15VENDOREXPERIMENT=1
+      # HINT: go-1.5.x needs GO15VENDOREXPERIMENT, therefore specify it via "include"
+ allow_failures:
+    - go: tip
+      # HINT: this is only for interest -- decision to support new versions is made manually
+
+script:
+  - go generate -x ./...
+  # run tests with coverage for all subpackages
+  - gotestcover -v -covermode=count -coverprofile=coverage.out ./...
+  # submit to coveralls.io
+  - $HOME/gopath/bin/goveralls -coverprofile=coverage.out -service=travis-ci -repotoken $COVERALLS_TOKEN
+  
