@@ -4,6 +4,9 @@ import (
 	"flag"
 	"fmt"
 	"os"
+
+	"github.com/fxnn/gold/import/csv"
+	"github.com/fxnn/gold/model"
 )
 
 var source = flag.String("source", "", "Path to source CSV file")
@@ -29,14 +32,14 @@ func main() {
 	}
 	defer file.Close()
 
-	var transactions []transaction
-	if transactions, err = readCsv(file); err != nil {
+	var transactions []model.Transaction
+	if transactions, err = csv.ReadSparkasse(file); err != nil {
 		fmt.Printf("Error: %s\n", err)
 		os.Exit(1)
 	}
 
 	for idx, t := range transactions {
-		fmt.Printf("%3d %s: %d %s\n", idx, t.partner, t.amount, t.currency)
+		fmt.Printf("%3d %s: %d %s\n", idx, t.Partner, t.Amount, t.Currency)
 	}
 
 }

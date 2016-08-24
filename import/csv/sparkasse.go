@@ -1,4 +1,4 @@
-package main
+package csv
 
 import (
 	"encoding/csv"
@@ -7,18 +7,22 @@ import (
 	"os"
 	"strconv"
 	"strings"
+
+	"github.com/fxnn/gold/model"
 )
 
 import "io"
 
 import "time"
 
-func readCsv(source *os.File) ([]transaction, error) {
+// ReadSparkasse parses the MT940-CSV format as provided on
+// sparkasse-gera-greiz.de
+func ReadSparkasse(source *os.File) ([]model.Transaction, error) {
 
 	csvReader := csv.NewReader(source)
 	csvReader.Comma = ';'
 
-	var result []transaction
+	var result []model.Transaction
 
 	for {
 		record, err := csvReader.Read()
@@ -28,19 +32,19 @@ func readCsv(source *os.File) ([]transaction, error) {
 			return nil, fmt.Errorf("could not read CSV file: %s\n", err)
 		}
 
-		var t transaction
-		t.date, err = time.Parse("02.01.06", record[2])
+		var t model.Transaction
+		t.Date, err = time.Parse("02.01.06", record[2])
 		if err != nil {
 			fmt.Printf("Warning: couldn't parse date field: %s\n", err)
 		}
-		t.postingText = record[3]
-		t.reference = record[4]
-		t.partner = record[5]
-		t.amount, err = parseAmount(record[8])
+		t.PostingText = record[3]
+		t.Reference = record[4]
+		t.Partner = record[5]
+		t.Amount, err = parseAmount(record[8])
 		if err != nil {
 			fmt.Printf("Warning: couldn't parse amount field: %s\n", err)
 		}
-		t.currency = record[9]
+		t.Currency = record[9]
 
 		result = append(result, t)
 	}

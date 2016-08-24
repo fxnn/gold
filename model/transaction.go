@@ -1,26 +1,27 @@
-package main
+package model
 
 import (
 	"time"
 )
 
-type transaction struct {
+// Transaction models a single payment done from or to the user's account.
+type Transaction struct {
 
 	// date of the transaction
-	date time.Time
+	Date time.Time
 
 	// postingText describes the contents of this transaction
-	postingText string
+	PostingText string
 
 	// reference code allows to uniquely identify the reason of this transaction
-	reference string
+	Reference string
 
 	// parnter describes the other party (creditor/debitor) for this transaction
-	partner string
+	Partner string
 
 	// amount of minor units this transaction contains
-	amount int
+	Amount int
 
 	// currency of the amount in ISO three letter notation
-	currency string
+	Currency string
 }
