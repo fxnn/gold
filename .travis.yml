@@ -10,7 +10,7 @@ matrix:
     - go: 1.5.2
       env: GO15VENDOREXPERIMENT=1
       # HINT: go-1.5.x needs GO15VENDOREXPERIMENT, therefore specify it via "include"
- allow_failures:
+  allow_failures:
     - go: tip
       # HINT: this is only for interest -- decision to support new versions is made manually
 
